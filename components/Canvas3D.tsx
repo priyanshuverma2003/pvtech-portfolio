@@ -25,15 +25,15 @@ export default function Canvas3D() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     mountNode.appendChild(renderer.domElement);
 
-    // Particle Cloud
+    // Luxury Theme Colors: Electric Sky, Champagne Gold, Titanium Silver
     const particleCount = 280;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
-    const cyanColor = new THREE.Color('#00f0ff');
-    const purpleColor = new THREE.Color('#9333ea');
-    const whiteColor = new THREE.Color('#ffffff');
+    const skyColor = new THREE.Color('#38bdf8');
+    const goldColor = new THREE.Color('#f59e0b');
+    const silverColor = new THREE.Color('#e2e8f0');
 
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 80;
@@ -41,7 +41,7 @@ export default function Canvas3D() {
       positions[i * 3 + 2] = (Math.random() - 0.5) * 80;
 
       const randomVal = Math.random();
-      const col = randomVal > 0.6 ? cyanColor : randomVal > 0.3 ? purpleColor : whiteColor;
+      const col = randomVal > 0.6 ? skyColor : randomVal > 0.3 ? goldColor : silverColor;
       colors[i * 3] = col.r;
       colors[i * 3 + 1] = col.g;
       colors[i * 3 + 2] = col.b;
@@ -51,42 +51,42 @@ export default function Canvas3D() {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 0.9,
+      size: 0.85,
       vertexColors: true,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.75,
       blending: THREE.AdditiveBlending,
     });
 
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
-    // Dynamic 3D Geometric Polyhedron Core
+    // Dynamic Polyhedron Mesh
     const polyhedronGeo = new THREE.IcosahedronGeometry(13, 1);
     const wireframeMat = new THREE.MeshBasicMaterial({
-      color: 0x8b5cf6,
+      color: 0x38bdf8,
       wireframe: true,
       transparent: true,
-      opacity: 0.16,
+      opacity: 0.14,
     });
     const polyhedron = new THREE.Mesh(polyhedronGeo, wireframeMat);
     scene.add(polyhedron);
 
-    // Inner Glowing Cyan Lattice
+    // Inner Glowing Core (Champagne Amber)
     const innerGeo = new THREE.OctahedronGeometry(7, 0);
     const innerMat = new THREE.MeshBasicMaterial({
-      color: 0x00f0ff,
+      color: 0xf59e0b,
       wireframe: true,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.28,
     });
     const innerCore = new THREE.Mesh(innerGeo, innerMat);
     scene.add(innerCore);
 
-    // Floating Ring
+    // Subtle Torus Ring
     const torusGeo = new THREE.TorusGeometry(18, 0.1, 16, 100);
     const torusMat = new THREE.MeshBasicMaterial({
-      color: 0x00f0ff,
+      color: 0x71717a,
       transparent: true,
       opacity: 0.15,
     });
@@ -101,8 +101,8 @@ export default function Canvas3D() {
     let targetY = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
-      mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
+      mouseX = (e.clientX - window.innerWidth / 2) * 0.0008;
+      mouseY = (e.clientY - window.innerHeight / 2) * 0.0008;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -127,17 +127,17 @@ export default function Canvas3D() {
       targetX += (mouseX - targetX) * 0.05;
       targetY += (mouseY - targetY) * 0.05;
 
-      polyhedron.rotation.x = elapsedTime * 0.15 + targetY * 0.5;
-      polyhedron.rotation.y = elapsedTime * 0.2 + targetX * 0.5;
+      polyhedron.rotation.x = elapsedTime * 0.12 + targetY * 0.4;
+      polyhedron.rotation.y = elapsedTime * 0.18 + targetX * 0.4;
 
-      innerCore.rotation.x = -elapsedTime * 0.25;
-      innerCore.rotation.y = -elapsedTime * 0.3;
+      innerCore.rotation.x = -elapsedTime * 0.2;
+      innerCore.rotation.y = -elapsedTime * 0.25;
 
-      torus.rotation.z = elapsedTime * 0.1;
-      torus.rotation.y = targetX * 0.3;
+      torus.rotation.z = elapsedTime * 0.08;
+      torus.rotation.y = targetX * 0.25;
 
-      particles.rotation.y = elapsedTime * 0.03 + targetX * 0.2;
-      particles.rotation.x = elapsedTime * 0.02 + targetY * 0.2;
+      particles.rotation.y = elapsedTime * 0.02 + targetX * 0.15;
+      particles.rotation.x = elapsedTime * 0.015 + targetY * 0.15;
 
       renderer.render(scene, camera);
     };
@@ -174,7 +174,7 @@ export default function Canvas3D() {
         height: '100vh',
         pointerEvents: 'none',
         zIndex: 0,
-        opacity: 0.9,
+        opacity: 0.85,
       }}
     />
   );

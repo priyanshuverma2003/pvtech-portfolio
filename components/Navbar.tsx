@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, Terminal, Sparkles, ArrowUpRight } from 'lucide-react';
+import { Menu, X, Terminal, ArrowUpRight, Palette, Moon, Sun, Monitor } from 'lucide-react';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('obsidian');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +16,11 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const changeTheme = (themeName: string) => {
+    setCurrentTheme(themeName);
+    document.documentElement.setAttribute('data-theme', themeName);
+  };
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -28,7 +34,7 @@ export default function Navbar() {
     <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ''}`}>
       <div className={`container ${styles.navContainer}`}>
         {/* Brand Logo */}
-        <a href="#hero" className={styles.logo}>
+        <a href="#hero" className={styles.logo} data-cursor="PV.TECH">
           <Terminal size={22} className={styles.logoIcon} />
           <span className={styles.logoText}>
             PV<span className={styles.logoDot}>.TECH</span>
@@ -39,20 +45,33 @@ export default function Navbar() {
         {/* Desktop Links */}
         <nav className={styles.desktopNav}>
           {navLinks.map((link, idx) => (
-            <a key={link.name} href={link.href} className={styles.navLink}>
+            <a key={link.name} href={link.href} className={styles.navLink} data-cursor={link.name.toUpperCase()}>
               <span className={styles.linkIndex}>0{idx + 1}.</span> {link.name}
             </a>
           ))}
         </nav>
 
-        {/* Contact CTA */}
+        {/* Right Actions & Theme Switcher */}
         <div className={styles.navRight}>
-          <a href="#contact" className={styles.ctaButton}>
+          {/* Theme Selector Toggle */}
+          <div className={styles.themeGroup}>
+            <button
+              onClick={() => changeTheme(currentTheme === 'obsidian' ? 'monochrome' : currentTheme === 'monochrome' ? 'cyber' : 'obsidian')}
+              className={styles.themeBtn}
+              title={`Current Theme: ${currentTheme.toUpperCase()} (Click to toggle)`}
+              data-cursor="THEME"
+            >
+              <Palette size={16} />
+              <span className={styles.themeLabel}>{currentTheme.toUpperCase()}</span>
+            </button>
+          </div>
+
+          <a href="#contact" className={styles.ctaButton} data-cursor="CONTACT">
             <span>LET'S TALK</span>
             <ArrowUpRight size={16} />
           </a>
 
-          {/* Mobile Hamburger Toggle */}
+          {/* Mobile Toggle */}
           <button
             className={styles.mobileToggle}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -63,7 +82,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className={styles.mobileMenu}>
           {navLinks.map((link, idx) => (
