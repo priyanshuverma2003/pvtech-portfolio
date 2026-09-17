@@ -9,16 +9,20 @@ import Skills from '@/components/Skills';
 import Certifications from '@/components/Certifications';
 import Contact from '@/components/Contact';
 
-// Dynamically import Three.js 3D Canvas with SSR disabled
+// Dynamically import client components with SSR disabled
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
+const CustomCursor = dynamic(() => import('@/components/CustomCursor'), { ssr: false });
 
 export default function Home() {
   return (
     <main style={{ position: 'relative', overflow: 'hidden' }}>
+      {/* Custom Interactive Magnetic Cursor */}
+      <CustomCursor />
+
       {/* Three.js Interactive WebGL Background */}
       <Canvas3D />
 
-      {/* Main Content Layout */}
+      {/* Main Content Sections */}
       <Navbar />
       <Hero />
       <Experience />

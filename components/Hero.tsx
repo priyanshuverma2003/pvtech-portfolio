@@ -1,27 +1,34 @@
 'use client';
 
-import { ArrowDownRight, FileText, Sparkles, MapPin, Code2 } from 'lucide-react';
+import { ArrowDownRight, FileText, Sparkles, MapPin, Zap, Layers, Award, Terminal } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import styles from './Hero.module.css';
 
 export default function Hero() {
   const triggerConfetti = () => {
     confetti({
-      particleCount: 80,
-      spread: 70,
+      particleCount: 100,
+      spread: 90,
       origin: { y: 0.6 },
-      colors: ['#00f0ff', '#8b5cf6', '#ffffff'],
+      colors: ['#00f0ff', '#8b5cf6', '#ffffff', '#10b981'],
     });
   };
+
+  const stats = [
+    { label: 'FEATURED PROJECTS', value: '02', icon: Layers },
+    { label: 'INTERNSHIP EXP', value: '01', icon: Terminal },
+    { label: 'ACADEMIC GPA', value: '7.6', icon: Zap },
+    { label: 'CERTIFICATIONS', value: '04', icon: Award },
+  ];
 
   return (
     <section id="hero" className={styles.heroSection}>
       <div className={`container ${styles.heroContainer}`}>
-        {/* Status Index & Holarchive Header */}
+        {/* Editorial Header Status */}
         <div className={styles.metaRow}>
           <div className={styles.statusBadge}>
             <span className={styles.pulseDot} />
-            <span>AVAILABLE FOR FULL-STACK & FRONTEND ROLES</span>
+            <span>AVAILABLE FOR HIRE // FULL STACK & FRONTEND</span>
           </div>
 
           <div className={styles.locationBadge}>
@@ -29,33 +36,39 @@ export default function Hero() {
             <span>DELHI, INDIA</span>
           </div>
 
-          <div className={styles.archiveIndex}>
-            <span>[ ARCHIVE ID: PV-2025 ]</span>
+          <div className={styles.agencyTag}>
+            <span>[ DIGITAL PORTFOLIO 2026 ]</span>
           </div>
         </div>
 
-        {/* BBDO Style Oversized Headline */}
+        {/* BBDO Style Giant Kinetic Headline */}
         <div className={styles.headlineWrapper}>
+          <div className={styles.eyebrow}>
+            <span>CREATIVE DEVELOPER // WEB ARCHITECT</span>
+          </div>
+          
           <h1 className={styles.mainTitle}>
             PRIYANSHU <br />
-            <span className={styles.gradientText}>VERMA</span>
+            <span className={styles.strokeText}>VERMA</span>
           </h1>
+
           <p className={styles.subTitle}>
-            Full-Stack & Frontend Creative Developer crafting ultra-responsive web apps, dynamic REST APIs, and immersive digital interfaces.
+            Engineering next-generation web applications, ultra-responsive UI interfaces, and high-performance full-stack architectures.
           </p>
         </div>
 
         {/* Action Controls */}
         <div className={styles.ctaRow}>
-          <a href="#projects" className={styles.primaryCta}>
-            <span>EXPLORE WORK</span>
+          <a href="#projects" className={styles.primaryCta} data-cursor="EXPLORE">
+            <span>EXPLORE FEATURED WORKS</span>
             <ArrowDownRight size={18} />
           </a>
 
           <button
             onClick={triggerConfetti}
             className={styles.secondaryCta}
-            title="Download Resume Highlights"
+            data-cursor="DOWNLOAD"
+            title="Download CV Highlights"
           >
             <FileText size={18} />
             <span>GET CV HIGHLIGHTS</span>
@@ -63,11 +76,27 @@ export default function Hero() {
           </button>
         </div>
 
-        {/* Ticker Marquee Bar */}
+        {/* BBDO Stats Matrix Bar */}
+        <div className={styles.statsGrid}>
+          {stats.map((stat, idx) => {
+            const Icon = stat.icon;
+            return (
+              <div key={idx} className={styles.statBox}>
+                <div className={styles.statHeader}>
+                  <Icon size={16} className={styles.statIcon} />
+                  <span className={styles.statLabel}>{stat.label}</span>
+                </div>
+                <span className={styles.statValue}>{stat.value}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Dynamic Running Agency Ticker */}
         <div className={styles.tickerContainer}>
           <div className={styles.tickerTrack}>
-            <span>NEXT.JS // VANILLA CSS // THREE.JS // NODE.JS // MONGODB // AMAZON CLONE // KIRTI4ARTS // ASCENTION CORP INTERN // BCA 7.6 GPA // </span>
-            <span>NEXT.JS // VANILLA CSS // THREE.JS // NODE.JS // MONGODB // AMAZON CLONE // KIRTI4ARTS // ASCENTION CORP INTERN // BCA 7.6 GPA // </span>
+            <span>NEXT.JS // THREE.JS 3D // VANILLA CSS // FULL-STACK REACT // ASCENTION CORP INTERN // KIRTI4ARTS // AMAZON CLONE // BCA TOPPER // </span>
+            <span>NEXT.JS // THREE.JS 3D // VANILLA CSS // FULL-STACK REACT // ASCENTION CORP INTERN // KIRTI4ARTS // AMAZON CLONE // BCA TOPPER // </span>
           </div>
         </div>
       </div>
