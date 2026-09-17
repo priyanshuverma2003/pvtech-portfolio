@@ -1,0 +1,5 @@
+{
+  "name": "pvtech-portfolio",
+  "alias": ["pvtech.portfolio"],
+  "framework": "nextjs"
+}
